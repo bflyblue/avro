@@ -64,6 +64,7 @@ import           Data.Avro.Encoding.ToAvro    ( ToAvro(..) )
 import           Data.Avro.HasAvroSchema      ( HasAvroSchema )
 import qualified Data.Avro.HasAvroSchema
 import           Data.Avro.Internal.EncodeRaw ( putI )
+import qualified Data.Avro.Schema.Decimal     as Decimal
 import           Data.Avro.Schema.Schema      ( Schema, TypeName, Field )
 import qualified Data.Avro.Schema.Schema      as Schema
 import           Data.Avro.Deriving.Lift ()
@@ -427,7 +428,7 @@ mkFieldTypeName namespaceBehavior = \case
   Schema.Boolean          -> [t| Bool |]
 
   Schema.Long (Just (Schema.DecimalL (Schema.Decimal p s)))
-    -> [t| Schema.Decimal $(TH.litT $ TH.numTyLit p) $(TH.litT $ TH.numTyLit s) |]
+    -> [t| Decimal.Decimal $(TH.litT $ TH.numTyLit p) $(TH.litT $ TH.numTyLit s) |]
   Schema.Long (Just Schema.TimeMicros)
     -> [t| DiffTime |]
   Schema.Long (Just Schema.TimestampMicros)
